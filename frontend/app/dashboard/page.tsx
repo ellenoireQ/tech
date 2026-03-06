@@ -10,15 +10,18 @@ type SalesItem = {
   status: string;
 };
 
+const EXPAND_OPTIONS = [5, 10, 25, 50, 100];
+
 export default function DashboardPage() {
   const [data, setData] = useState<SalesItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [expand, setExpand] = useState(10);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
 
-    fetch("http://127.0.0.1:8000/sales?expand=10", {
+    fetch(`http://127.0.0.1:8000/sales?expand=${expand}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -30,13 +33,32 @@ export default function DashboardPage() {
       .then((json) => setData(json.data))
       .catch((err: Error) => setError(err.message))
       .finally(() => setLoading(false));
-  }, []);
+  }, [expand]);
 
   return (
     <div className="min-h-screen bg-zinc-50 p-8 dark:bg-zinc-950">
-      <h1 className="mb-6 text-2xl font-semibold text-zinc-900 dark:text-zinc-50">
-        Dashboard Penjualan
-      </h1>
+      <div className="mb-6 flex items-center justify-between">
+        <h1 className="text-2xl font-semibold text-zinc-900 dark:text-zinc-50">
+          Dashboard Penjualan
+        </h1>
+        <div className="flex items-center gap-2">
+          <label className="text-sm text-zinc-500 dark:text-zinc-400">Tampilkan</label>
+          <select
+            value={expand}
+            onChange={(e) => {
+              setLoading(true);
+              setExpand(Number(e.target.value));
+            }}
+            className="rounded-lg border border-zinc-300 bg-white px-3 py-1.5 text-sm text-zinc-900 outline-none transition focus:border-zinc-600 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-50 dark:focus:border-zinc-400"
+          >
+            {EXPAND_OPTIONS.map((opt) => (
+              <option key={opt} value={opt}>
+                {opt}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
 
       {loading && (
         <p className="text-sm text-zinc-500">Memuat data...</p>
