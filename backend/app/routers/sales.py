@@ -1,17 +1,12 @@
-from fastapi import APIRouter
-from fastapi.responses import JSONResponse
+from fastapi import APIRouter, HTTPException
 from ml.utils.load_data import load_data
 
 router = APIRouter()
 
-# Sales Data Endpoint
-# method: GET
-# description: Returns sales data in JSON format. Accepts an optional query parameter 'expand' to specify how many records to return (default is 10).
-#
-# example (cUrl):
-# curl -X GET "http://localhost:8000/sales?expand=20"
-#
-@router.get("")
+
+@router.get("", summary="Get Sales Data", description="Return sales data. Use `expand` to set how many records to return (default: 10).")
 def sales(expand: int = 10):
+    if expand < 1:
+        raise HTTPException(status_code=400, detail="expand must be greater than 0")
     data = load_data(expand)
     return data

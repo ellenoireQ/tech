@@ -1,19 +1,14 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from app.schemas.sales import PredictRequest
 
 from ml.utils.load_models import load_model
 
 router = APIRouter()
 
-# Prediction Endpoint
-# method: POST
-# description: Accepts JSON input, runs the ML model, and returns predictions.
-#
-# example (cUrl):
-# curl -X POST "http://localhost:8000/predict" -H "Content-Type: application/json" 
-# -d '{"data": [{"feature1": 10, "feature2": 20, "feature3": 30}]}'
-#
-@router.post("")
+
+@router.post("", summary="Predict Sales Status", description="Predict whether each product will sell (Laris / Tidak Laris) based on sales features.")
 def predict(request: PredictRequest):
+    if not request.data:
+        raise HTTPException(status_code=400, detail="data must not be empty")
     result = load_model(request.model_dump())
     return {"predictions": result}

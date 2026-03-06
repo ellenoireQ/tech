@@ -1,23 +1,15 @@
-from starlette.responses import JSONResponse
+from fastapi import APIRouter, HTTPException, status
+from fastapi.responses import JSONResponse
 from datetime import timedelta
 
 from app.utils.jwt import create_access_token
 from app.utils.validate_user import validate_user
-from fastapi import APIRouter, HTTPException, status
 from app.schemas.user import UserLogin
 
 router = APIRouter()
 
 
-# Login Endpoint
-# method: POST
-# description: Authenticates user and returns a JWT token in an HTTP-only cookie.
-#
-# example (cUrl):
-# curl -X POST "http://localhost:8000/login" -H "Content-Type: application/json" 
-# -d '{"email": "test@example.com", "password": "password"}'
-#
-@router.post("")
+@router.post("", summary="Login", description="Authenticate user and return JWT via HTTP-only cookie.")
 def login(user: UserLogin):
     user = validate_user(user)
     if not user:
@@ -26,9 +18,8 @@ def login(user: UserLogin):
             detail="Incorrect username or password",
             headers={"WWW-Authenticate": "Bearer"},
         )
-    access_token_expires = timedelta(minutes=30)
     access_token = create_access_token(
-        data={"sub": user.email}, expires_delta=access_token_expires
+        data={"sub": user.email}, expires_delta=timedelta(minutes=30)
     )
     response = JSONResponse({"message": "Login success"})
     response.set_cookie(
