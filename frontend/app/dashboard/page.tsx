@@ -10,7 +10,7 @@ type SalesItem = {
   status: string;
 };
 
-const EXPAND_OPTIONS = [5, 10, 25, 50, 100];
+const EXPAND_OPTIONS = [5, 10, 25, 50, 100, 1000, 999999];
 
 export default function DashboardPage() {
   const [data, setData] = useState<SalesItem[]>([]);
