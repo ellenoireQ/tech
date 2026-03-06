@@ -18,15 +18,13 @@ export default function LoginForm() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
+        credentials: "include",
       });
 
       if (!res.ok) {
         const data = await res.json();
         setError(data.detail || "Login failed.");
       } else {
-        const data = await res.json();
-        localStorage.setItem("token", data.access_token);
-        console.log(data.access_token);
         window.location.href = "/dashboard";
       }
     } catch {
