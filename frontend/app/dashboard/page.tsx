@@ -20,6 +20,7 @@ export default function DashboardPage() {
   const [predictions, setPredictions] = useState<string[]>([]);
   const [predicting, setPredicting] = useState(false);
   const [predictError, setPredictError] = useState("");
+  const [log, setLog] = useState<string>("");
 
   useEffect(() => {
     fetch(`http://127.0.0.1:8000/sales?expand=${expand}`, {
@@ -52,8 +53,11 @@ export default function DashboardPage() {
       if (!res.ok) throw new Error("Prediction failed.");
       const json = await res.json();
       setPredictions(json.predictions);
+      setLog(JSON.stringify(json.predictions, null, 2));
     } catch (err: unknown) {
-      if (err instanceof Error) setPredictError(err.message);
+      const msg = err instanceof Error ? err.message : "Unknown error";
+      setPredictError(msg);
+      setLog(msg);
     } finally {
       setPredicting(false);
     }
@@ -161,6 +165,9 @@ export default function DashboardPage() {
             </tbody>
           </table>
         </div>
+      )}
+      {log && (
+        <pre className="mt-6 overflow-x-auto rounded-lg bg-zinc-900 p-4 text-sm text-zinc-100 dark:bg-zinc-950">{log}</pre>
       )}
     </div>
   );
