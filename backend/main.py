@@ -21,10 +21,12 @@ app.add_middleware(
 # Routers
 app.include_router(login.router, prefix="/login", tags=["login"])
 
+
 # Global endpoints
 @app.get("/", tags=["root"])
 def root():
     return {"message": f"Welcome to {settings.APP_NAME}"}
+
 
 @app.get("/health", tags=["root"])
 def health_check():

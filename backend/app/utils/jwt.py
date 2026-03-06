@@ -6,11 +6,18 @@ from app.schemas.user import UserLogin
 from app.core.config import settings
 
 
+# Token Base Model
 class Token(BaseModel):
     access_token: str
     token_type: str
 
 
+# create_access_token
+# Description:
+# Creating encoded JWT Token
+#
+# example:
+# create_access_token(data={"sub": email}, expires_delta=timedelta(minutes=x))
 def create_access_token(data: dict, expires_delta: timedelta | None = None):
     to_encode = data.copy()
     if expires_delta:
