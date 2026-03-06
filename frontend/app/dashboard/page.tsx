@@ -17,23 +17,47 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [expand, setExpand] = useState(10);
+  const [predictions, setPredictions] = useState<string[]>([]);
+  const [predicting, setPredicting] = useState(false);
+  const [predictError, setPredictError] = useState("");
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-
     fetch(`http://127.0.0.1:8000/sales?expand=${expand}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      credentials: "include",
     })
       .then((res) => {
         if (!res.ok) throw new Error("Failed to retrieve the data.");
         return res.json();
       })
-      .then((json) => setData(json.data))
+      .then((json) => {
+        setData(json.data);
+        setPredictions([]);
+      })
       .catch((err: Error) => setError(err.message))
       .finally(() => setLoading(false));
   }, [expand]);
+
+  const handlePredict = async () => {
+    setPredicting(true);
+    setPredictError("");
+    try {
+      const res = await fetch("http://127.0.0.1:8000/predict", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({ data }),
+      });
+      if (!res.ok) throw new Error("Prediction failed.");
+      const json = await res.json();
+      setPredictions(json.predictions);
+    } catch (err: unknown) {
+      if (err instanceof Error) setPredictError(err.message);
+    } finally {
+      setPredicting(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-zinc-50 p-8 dark:bg-zinc-950">
@@ -57,6 +81,13 @@ export default function DashboardPage() {
               </option>
             ))}
           </select>
+          <button
+            onClick={handlePredict}
+            disabled={predicting || loading || data.length === 0}
+            className="rounded-lg bg-zinc-900 px-4 py-1.5 text-sm font-medium text-white transition hover:bg-zinc-700 disabled:opacity-50 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-200"
+          >
+            {predicting ? "Memproses..." : "Prediksi"}
+          </button>
         </div>
       </div>
 
@@ -66,6 +97,10 @@ export default function DashboardPage() {
 
       {error && (
         <p className="text-sm text-red-500">{error}</p>
+      )}
+
+      {predictError && (
+        <p className="text-sm text-red-500">{predictError}</p>
       )}
 
       {!loading && !error && (
@@ -78,6 +113,9 @@ export default function DashboardPage() {
                 <th className="px-4 py-3">Harga</th>
                 <th className="px-4 py-3">Diskon (%)</th>
                 <th className="px-4 py-3">Status</th>
+                {predictions.length > 0 && (
+                  <th className="px-4 py-3">Prediksi</th>
+                )}
               </tr>
             </thead>
             <tbody>
@@ -105,6 +143,19 @@ export default function DashboardPage() {
                       {item.status}
                     </span>
                   </td>
+                  {predictions.length > 0 && (
+                    <td className="px-4 py-3">
+                      <span
+                        className={`rounded-full px-2 py-0.5 text-xs font-medium ${
+                          predictions[i] === "Laris"
+                            ? "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300"
+                            : "bg-orange-100 text-orange-600 dark:bg-orange-900 dark:text-orange-300"
+                        }`}
+                      >
+                        {predictions[i]}
+                      </span>
+                    </td>
+                  )}
                 </tr>
               ))}
             </tbody>
