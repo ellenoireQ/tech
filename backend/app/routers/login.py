@@ -1,3 +1,4 @@
+from starlette.responses import JSONResponse
 from app.utils.jwt import Token
 from datetime import timedelta
 
@@ -23,4 +24,8 @@ def login(user: UserLogin):
     access_token = create_access_token(
         data={"sub": user.email}, expires_delta=access_token_expires
     )
-    return Token(access_token=access_token, token_type="bearer")
+    response = JSONResponse({"message": "Login success"})
+    response.set_cookie(
+        key="token", value=access_token, httponly=True, max_age=1800, samesite="strict"
+    )
+    return response
