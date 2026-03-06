@@ -4,12 +4,12 @@
 
 <table>
   <tr>
-    <td><img src="screenshoots/Screenshot_20260306_200804.png"/></td>
-    <td><img src="screenshoots/Screenshot_20260306_200900.png"/></td>
+    <td><img src="assets/images/Screenshot_20260306_200804.png"/></td>
+    <td><img src="assets/images/Screenshot_20260306_200900.png"/></td>
   </tr>
   <tr>
-    <td><img src="screenshoots/Screenshot_20260306_200923.png"/></td>
-    <td><img src="screenshoots/Screenshot_20260306_200940.png"/></td>
+    <td><img src="assets/images/Screenshot_20260306_200923.png"/></td>
+    <td><img src="assets/images/Screenshot_20260306_200940.png"/></td>
   </tr>
 </table>
 
@@ -46,6 +46,9 @@ npm run dev
 
 App berjalan di `http://localhost:3000`
 
+## System Design
+![sys_design](assets/images/diagram_flow.png)
+[Download pdf](assets/pdf/system_design.pdf)
 ## Design Decisions
 
 ### Frontend
