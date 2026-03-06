@@ -1,7 +1,10 @@
-# Python     
-__pycache__/ 
-*.py[cod]    
-*.pyo        
-*.pyd        
-*.pyc        
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+
+# Test cache
+.pytest_cache/
 
