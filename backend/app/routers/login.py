@@ -1,5 +1,4 @@
 from starlette.responses import JSONResponse
-from app.utils.jwt import Token
 from datetime import timedelta
 
 from app.utils.jwt import create_access_token
@@ -11,7 +10,7 @@ router = APIRouter()
 
 
 #
-@router.post("", response_model=Token)
+@router.post("")
 def login(user: UserLogin):
     user = validate_user(user)
     if not user:

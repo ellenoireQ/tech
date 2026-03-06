@@ -1,15 +1,7 @@
 import jwt
-from pydantic import BaseModel
-from typing import Annotated
 from datetime import datetime, timedelta, timezone
 from app.schemas.user import UserLogin
 from app.core.config import settings
-
-
-# Token Base Model
-class Token(BaseModel):
-    access_token: str
-    token_type: str
 
 
 # create_access_token
