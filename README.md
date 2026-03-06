@@ -27,7 +27,7 @@
 
 ## How to run
 ```
-dummy password
+dummy account
 
 email: test@example.com
 password: password
