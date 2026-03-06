@@ -32,6 +32,23 @@ dummy password
 email: test@example.com
 password: password
 ```
+
+### Setup venv
+
+```bash
+# Buat venv
+python -m venv venv
+
+# Linux / macOS
+source venv/bin/activate
+
+# fish
+source venv/bin/activate.fish
+
+# Windows
+venv\Scripts\activate
+```
+
 ## Backend
 
 ```bash
