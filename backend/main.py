@@ -6,7 +6,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
-from app.routers import login, sales
+from app.routers import login, predict, sales
 
 app = FastAPI(
     title=settings.APP_NAME,
@@ -26,6 +26,7 @@ app.add_middleware(
 # Routers
 app.include_router(login.router, prefix="/login", tags=["login"])
 app.include_router(sales.router, prefix="/sales", tags=["sales"])
+app.include_router(predict.router, prefix="/predict", tags=["predict"])
 
 
 # Global endpoints
