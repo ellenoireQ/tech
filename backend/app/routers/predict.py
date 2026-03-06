@@ -1,6 +1,5 @@
-from backend.app.schemas.sales import PredictRequest
 from fastapi import APIRouter
-from pydantic import BaseModel
+from app.schemas.sales import PredictRequest
 
 from ml.utils.load_models import load_model
 
