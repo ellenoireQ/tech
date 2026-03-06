@@ -15,7 +15,9 @@ def load_data():
     ]
 
     sales_data = pd.read_csv(
-        os.path.join(BASE_DIR, "data", "sales_data.csv"), index_col="product_id", usecols=cols
+        os.path.join(BASE_DIR, "data", "sales_data.csv"),
+        index_col="product_id",
+        usecols=cols,
     )
 
-    return sales_data.head(50)
+    return sales_data.to_dict(orient="records")
