@@ -1,5 +1,17 @@
 # Technical test
 
+## Table of Contents
+- [Screenshots](#screenshots)
+- [How to run](#how-to-run)
+- [Backend](#backend)
+- [Frontend](#frontend)
+- [System Design](#system-design)
+- [Design Decisions](#design-decisions)
+  - [Frontend](#frontend-1)
+  - [Backend](#backend-1)
+  - [Machine Learning](#machine-learning)
+- [Asumsi yang Digunakan](#asumsi-yang-digunakan)
+
 ## Screenshots
 
 <table>
