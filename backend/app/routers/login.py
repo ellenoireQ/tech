@@ -9,6 +9,13 @@ from app.schemas.user import UserLogin
 router = APIRouter()
 
 
+# Login Endpoint
+# method: POST
+# description: Authenticates user and returns a JWT token in an HTTP-only cookie.
+#
+# example (cUrl):
+# curl -X POST "http://localhost:8000/login" -H "Content-Type: application/json" 
+# -d '{"email": "test@example.com", "password": "password"}'
 #
 @router.post("")
 def login(user: UserLogin):
