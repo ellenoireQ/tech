@@ -4,7 +4,7 @@ import pandas as pd
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
-def load_data():
+def load_data(expand: int):
     cols = [
         "product_id",
         "product_name",
@@ -20,4 +20,4 @@ def load_data():
         usecols=cols,
     )
 
-    return sales_data.to_dict(orient="records")
+    return {"data": sales_data.head(expand).to_dict(orient="records")}

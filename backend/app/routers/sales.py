@@ -6,6 +6,6 @@ router = APIRouter()
 
 
 @router.get("")
-def sales():
-    data = load_data()
-    return JSONResponse(data)
+def sales(expand: int = 10):
+    data = load_data(expand)
+    return data
