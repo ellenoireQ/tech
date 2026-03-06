@@ -1,5 +1,18 @@
 # Technical test
 
+## Screenshots
+
+<table>
+  <tr>
+    <td><img src="screenshoots/Screenshot_20260306_200804.png"/></td>
+    <td><img src="screenshoots/Screenshot_20260306_200900.png"/></td>
+  </tr>
+  <tr>
+    <td><img src="screenshoots/Screenshot_20260306_200923.png"/></td>
+    <td><img src="screenshoots/Screenshot_20260306_200940.png"/></td>
+  </tr>
+</table>
+
 ## How to run
 ```
 dummy password
